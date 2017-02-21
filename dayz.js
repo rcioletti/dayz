@@ -1,18 +1,24 @@
 var isLogged = false;
-var id = 0;
-var health = 12000;
+var health = "12000";
 
 API.onUpdate.connect(function (sender, args) {
-   if(isLogged = true){
-
-   }
+    if(isLogged == true){
+        API.triggerServerEvent("spawnPoint", sender);
+        API.setActiveCamera(null);
+    }
 
 });
 
 API.onServerEventTrigger.connect(function (eventName, args) {
-    if(eventName = "spawn"){
-        id = args[0];
-        isLogged = args[1];
-        health = args[2];
+    if(eventName == "spawn"){
+        isLogged = true;
+    }
+});
+
+API.onLocalPlayerDamaged.connect(function(enemy, weapon, bone) {
+    if (bone == 31086) // head
+    {
+        API.triggerServerEvent("headshot", enemy);
+        API.setPlayerHealth(-1);
     }
 });

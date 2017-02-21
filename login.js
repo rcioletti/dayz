@@ -1,44 +1,46 @@
-var mainMenu = API.createMenu("Login", 0, 0, 4);
-var menuPool = API.getMenuPool();
+var menu = API.createMenu("Login", 0, 0, 4);
+var pool = API.getMenuPool();
 
 
-menuPool.Add(mainMenu);
+pool.Add(menu);
 
 API.onServerEventTrigger.connect(function (eventName, args) {
     if (eventName == "notHaveAccount") {
 
         player = args[0];
-        menuPool = API.getMenuPool();
+        pool = API.getMenuPool();
 
-        mainMenu = API.createMenu("Register", "Welcome to the Server " + player + "!", -215, 100, 4);
+        menu = API.createMenu("Register", "Welcome to DayZ " + player + "!", -215, 100, 4);
         var registerButton = API.createMenuItem("Register", "Click to Register!");
-        mainMenu.AddItem(registerButton);
+        menu.AddItem(registerButton);
 
         registerButton.Activated.connect(function (menu, item) {
             var passwordString = API.getUserInput("", 25);
             API.triggerServerEvent("register", passwordString)
         });
 
-        menuPool.Add(mainMenu);
-        mainMenu.Visible = true;
+        pool.Add(menu);
+        menu.Visible = true;
     }else if(eventName == "haveAccount"){
         player = args[0];
-        menuPool = API.getMenuPool();
+        pool = API.getMenuPool();
 
-        mainMenu = API.createMenu("Login", "Welcome to the server " + player + "!", -215, 100, 4);
+        menu = API.createMenu("Login", "Welcome to DayZ " + player + "!", -215, 100, 4);
         var loginButton = API.createMenuItem("Login", "Type your password to Login!");
-        mainMenu.AddItem(loginButton);
+        menu.AddItem(loginButton);
 
         loginButton.Activated.connect(function (menu, item) {
             var passwordString = API.getUserInput("", 25);
             API.triggerServerEvent("login", passwordString)
         });
 
-        menuPool.Add(mainMenu);
-        mainMenu.Visible = true;
+        pool.Add(menu);
+        menu.Visible = true;
+    }else if(eventName == "logged"){
+        menu.visible = false;
     }
 });
 
 API.onUpdate.connect(function(sender, events) {
-    menuPool.ProcessMenus();
+    pool.ProcessMenus();
 });

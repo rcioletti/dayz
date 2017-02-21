@@ -32,6 +32,8 @@ namespace DayZ
             {
                 Database.LoadPlayerAccount(sender);
                 API.sendChatMessageToPlayer(sender, "~g~Logged in successfully!");
+
+                API.triggerClientEvent(sender, "spawn");
             }
         }
 

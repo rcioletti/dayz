@@ -6,9 +6,9 @@ namespace DayZ
 {
     public class DayzGamemode : Script
     {
-        int id = 1;
-        int Health = 12000;
-        bool isLogged = true; 
+        string id = "1";
+        string Health = "12000";
+        string isLogged = "1"; 
 
         public DayzGamemode()
         {
@@ -19,10 +19,7 @@ namespace DayZ
 
         public void onPlayerConnect(Client player)
         {
-            if (Database.IsPlayerLoggedIn(player))
-            {
-                API.triggerClientEvent(player, "spawn", id, isLogged, Health);
-            }
+          
 
         }
 
