@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using GTANetworkServer;
+using GTANetworkShared;
 
 namespace DayZ
 {
@@ -124,6 +125,7 @@ namespace DayZ
         public string Humanity { get; set; }
         public string Murders { get; set; }
         public string[] Iventory { get; set; }
+		public Vector3 Pos {get; set; }
 
     }
 }

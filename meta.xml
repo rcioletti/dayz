@@ -3,11 +3,13 @@
   <assembly ref="mscorlib.dll" />
   <assembly ref="System.Xml.Serialization.dll" />
   <assembly ref="System.Xml.dll" />
-  <script src="camera.js" type="client" lang="javascript" />
   <script src="connection.cs" type="server" lang="csharp" />
   <script src="database.cs" type="server" lang="csharp" />
   <script src="dayz.cs" type="server" lang="csharp" />
   <script src="dayz.js" type="client" lang="javascript" />
   <script src="login.cs" type="server" lang="csharp" />
   <script src="login.js" type="client" lang="javascript" />
+  <script src="spawn.cs" type="server" lang="csharp" />
+
+<script src="pickups.cs" type="server" lang="csharp" />
 </meta>
