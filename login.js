@@ -37,7 +37,8 @@ API.onServerEventTrigger.connect(function (eventName, args) {
         pool.Add(menu);
         menu.Visible = true;
     }else if(eventName == "logged"){
-        menu.visible = false;
+        menu.Visible = false;
+        API.setActiveCamera(null);
     }
 });
 
