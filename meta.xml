@@ -10,6 +10,6 @@
   <script src="login.cs" type="server" lang="csharp" />
   <script src="login.js" type="client" lang="javascript" />
   <script src="spawn.cs" type="server" lang="csharp" />
-
-<script src="pickups.cs" type="server" lang="csharp" />
+  <script src="pickups.cs" type="server" lang="csharp" />
+<script src="editor.cs" type="server" lang="csharp" />
 </meta>

@@ -1,0 +1,6 @@
+C:\Users\DEV\Desktop\Server\resources\dayz\bin\Release\dayz.dll
+C:\Users\DEV\Desktop\Server\resources\dayz\bin\Release\dayz.pdb
+C:\Users\DEV\Desktop\Server\resources\dayz\bin\Release\GTANetworkServer.exe
+C:\Users\DEV\Desktop\Server\resources\dayz\bin\Release\GTANetworkShared.dll
+C:\Users\DEV\Desktop\Server\resources\dayz\obj\Release\dayz.dll
+C:\Users\DEV\Desktop\Server\resources\dayz\obj\Release\dayz.pdb

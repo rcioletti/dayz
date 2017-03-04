@@ -10,8 +10,9 @@ API.onServerEventTrigger.connect(function (eventName, args) {
         player = args[0];
         pool = API.getMenuPool();
 
-        menu = API.createMenu("Register", "Welcome to DayZ " + player + "!", -215, 100, 4);
+        menu = API.createMenu("GTAN DayZ Register", "Welcome to DayZ " + player + "!", -215, 100, 4);
         var registerButton = API.createMenuItem("Register", "Click to Register!");
+		menuColor = API.setMenuBannerRectangle(menu, 255, 220,20,60);
         menu.AddItem(registerButton);
 
         registerButton.Activated.connect(function (menu, item) {
@@ -24,9 +25,11 @@ API.onServerEventTrigger.connect(function (eventName, args) {
     }else if(eventName == "haveAccount"){
         player = args[0];
         pool = API.getMenuPool();
-
-        menu = API.createMenu("Login", "Welcome to DayZ " + player + "!", -215, 100, 4);
+		
+		
+        menu = API.createMenu("GTAN DayZ Login", "Welcome to DayZ " + player + "!", -215, 100, 4);
         var loginButton = API.createMenuItem("Login", "Type your password to Login!");
+		menuColor = API.setMenuBannerRectangle(menu, 255, 220,20,60);
         menu.AddItem(loginButton);
 
         loginButton.Activated.connect(function (menu, item) {
