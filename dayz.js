@@ -1,7 +1,7 @@
 var pool = API.getMenuPool();
 var isLogged = false;
 var blood = 0;
-var name = "";
+var playerName = "";
 var humanity = 0;
 var murders = 0;
 var banditsKilled = 0;
@@ -13,6 +13,27 @@ var backpack;
 var usedSlots;
 var itemSlots;
 var itemCounts;
+var ping = 0;
+var aliveTime = 0;
+
+var damageTable = [ ["M4", 3500],
+["CZ 550", 8000],
+["Winchester 1866", 3500],
+["MP5A5",889],
+["SPAZ-12 Combat Shotgun",2000],
+["AK-47",2722],
+["Lee Enfield",8000],
+["Hunting Knife",1500],
+["Hatchet",1006],
+["M1911",889],
+["M9 SD",889],
+["PDW",889],
+["Sawn-Off Shotgun",2000],
+["Desert Eagle",1389],
+["Grenade",17998],
+["Baseball Bat",953],
+["Shovel",953],
+["Golf Club",953] ];
 
 var res_X = API.getScreenResolutionMantainRatio().Width;
 var res_y = API.getScreenResolutionMantainRatio().Height;
@@ -43,7 +64,7 @@ if (name == "createCamera") {
         API.setActiveCamera(newCam);
     }else if(name == "stats"){
 		isLogged = args[0];
-		name = args[1];
+		playerName = args[1];
         humanity = args[2];
         murders = args[3];
         banditsKilled = args[4];
@@ -84,24 +105,77 @@ function openInventory()
 }
 
 function showDebugMonitor(sender){
-	if(isLogged == true){	
+	if(isLogged == true){
+
 		API.drawText("Debug Monitor: ", res_X - 150, 280, 0.2, 50, 205, 50, 255, 0, 1, false, false, 0);
+		API.drawText("Name: " + playerName, res_X - 300, 310, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+		API.drawText("Murders: ", res_X - 300, 340, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+		API.drawText("Zombies Killed: ", res_X - 300, 370, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+        API.drawText("Alive Time: ", res_X - 300, 400, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+        API.drawText("Headshots: ", res_X - 300, 430, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+        API.drawText("Blood: ", res_X - 300, 460, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+        API.drawText("Temperature: ", res_X - 300, 490, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+        API.drawText("Humanity: ", res_X - 300, 520, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
+		API.drawText("Bandits Killed: ", res_X - 300, 550, 0.25, 255, 255, 255, 255, 0, 0, false, false, 0);
 		
-		API.drawText("Name: ", res_X - 150, 310, 0.3, 255, 255, 255, 255, 0, 1, false, false, 0);
-		
-		API.drawText("Humanity: " + humanity, res_X - 150, 340, 0.3, 255, 255, 255, 255, 0, 1, false, false, 0);
-		API.drawText("Murders: " + API.getEntityData(sender, "murders"), res_X - 150, 370, 0.3, 255, 255, 255, 255, 0, 1, false, false, 0);
-		API.drawText("Bandits Killed: " + banditsKilled, res_X - 150, 400, 0.3, 255, 255, 255, 255, 0, 1, false, false, 0);
-		API.drawText("Headshots: " + headshots, res_X - 150, 430, 0.3, 255, 255, 255, 255, 0, 1, false, false, 0);
-		API.drawText("Zombies Killed: " + zombiesKilled, res_X - 150, 460, 0.3, 255, 255, 255, 255, 0, 1, false, false, 0);
-		API.drawText("Blood: " + blood, res_X - 150, 490, 0.3, 255, 255, 255, 255, 0, 1, false, false, 0);
 		
 		//DrawHUD
-		API.drawRectangle(res_X - 311, 279, 302, 277, 0, 0, 0, 255);
-        API.drawRectangle(res_X - 310, 280, 300, 275, 190, 190, 190, 50);
+		API.drawRectangle(res_X - 311, 279, 302, 302, 0, 0, 0, 255);
+        API.drawRectangle(res_X - 310, 280, 300, 300, 190, 190, 190, 20);
+
+        refreshDebugMonitor();
 		
 	}
 }
+
+function refreshDebugMonitor(){
+    if(isLogged == true){
+
+        var player = API.getLocalPlayer();
+
+        murders = API.getEntitySyncedData(player, "murders");
+        zombiesKilled = API.getEntitySyncedData(player, "zombiesKilled");
+        aliveTime = API.getEntitySyncedData(player, "aliveTime");
+        headshots = API.getEntitySyncedData(player, "headshots");
+        blood = API.getEntitySyncedData(player, "blood");
+        temperature = API.getEntitySyncedData(player, "temperature");
+        humanity = API.getEntitySyncedData(player, "humanity");
+        banditsKilled = API.getEntitySyncedData(player, "banditsKilled");
+
+        API.drawText("" + murders, res_X - 15, 340, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+        API.drawText("" + zombiesKilled, res_X - 15, 370, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+        API.drawText("" + aliveTime, res_X - 15, 400, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+        API.drawText("" + headshots, res_X - 15, 430, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+        API.drawText("" + blood, res_X - 15, 460, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+        API.drawText("" + temperature, res_X - 15, 490, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+        API.drawText("" + humanity, res_X - 15, 520, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+        API.drawText("" + banditsKilled, res_X - 15, 550, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
+    }
+}
+
+var timer0 = setInterval(refreshDebugMonitor, 2000);
+
+
+function checkPlayerPing(sender){
+
+ping = API.getPlayerPing(sender);
+
+    if(ping > 300){
+        API.disconnect("Bad Ping");
+    }
+}
+
+function setPlayerAliveTime(){
+    if(isLogged == true){
+    var player = API.getLocalPlayer();
+        
+    aliveTime = API.getEntitySyncedData(player, "aliveTime");
+    aliveTime += 1;
+    API.setEntitySyncedData(player, "aliveTime", aliveTime);
+    }
+}
+
+var timer = setInterval(setPlayerAliveTime, 1000 * 60);
 
 API.onKeyDown.connect(function (sender, e) {
   if (e.KeyCode === Keys.J) {
