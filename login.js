@@ -42,6 +42,7 @@ API.onServerEventTrigger.connect(function (eventName, args) {
     }else if(eventName == "logged"){
         menu.Visible = false;
         API.setActiveCamera(null);
+		API.triggerServerEvent("logged");
     }
 });
 

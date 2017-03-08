@@ -12,23 +12,23 @@ namespace DayZ
 
         public static readonly string[,] residential = new string[,]{{"Bandage", "1256177865", "1", "0", "4"},
                                                                       {"WeaponKnife", "170053282", "1", "90", "2"},
-                                                                      {"M1911", "-929681224", "1", "90", "1.35"},
+                                                                      {"M1911", "-929681224", "1", "90", "1"},
                                                                       {"Empty Gas Cannister", "-1730917948", "1", "90", "5"} };
         public static readonly string[,] industrial = new string[,]{{"Bandage", "1256177865", "1", "0", "4"},
                                                                       {"WeaponKnife", "170053282", "1", "90", "2"},
-                                                                      {"M1911", "-929681224", "1", "90", "1.35"},
+                                                                      {"M1911", "-929681224", "1", "90", "1"},
                                                                       {"Empty Gas Cannister", "-1730917948", "1", "90", "5"} };
         public static readonly string[,] farm = new string[,]{{"Bandage", "1256177865", "1", "0", "4"},
                                                                       {"WeaponKnife", "170053282", "1", "90", "2"},
-                                                                      {"M1911", "-105925489", "1", "90", "1.35"},
+                                                                      {"M1911", "-105925489", "1", "90", "1"},
                                                                       {"Empty Gas Cannister", "-962731009", "1", "90", "5"} };
         public static readonly string[,] supermarket = new string[,]{{"Bandage", "1256177865", "1", "0", "4"},
                                                                       {"WeaponKnife", "663586612", "1", "90", "2"},
-                                                                      {"M1911", "-105925489", "1", "90", "1.35"},
+                                                                      {"M1911", "-105925489", "1", "90", "1"},
                                                                       {"Empty Gas Cannister", "-962731009", "1", "90", "5"} };
         public static readonly string[,] military = new string[,]{{"Bandage", "1256177865", "1", "0", "4"},
                                                                       {"WeaponKnife", "663586612", "1", "90", "2"},
-                                                                      {"M1911", "-105925489", "1", "90", "1.35"},
+                                                                      {"M1911", "-105925489", "1", "90", "1"},
                                                                       {"Empty Gas Cannister", "-962731009", "1", "90", "5"} };
         public static readonly string[][,] itemTable = new string[][,] {residential, industrial, farm, supermarket, military};
 
@@ -49,18 +49,11 @@ namespace DayZ
         {
         }
 
-
-        public void SpawnPlayer(Client target)
-        {
-
-        }
-
         public void ResourceStart()
         {
-
+			
             createPickupsOnServerStart();
-
-
+			
         }
         public void createItemLoot(Vector3 lootPlace, int id, int lootType)
         {
@@ -78,11 +71,13 @@ namespace DayZ
 
                  for (int i = 0; i < itemTable[lootType].GetLength(0); i++)
                 {
-                    Random random = new Random();
-                //int percent = Int32.Parse(itemTable[lootType][i, 4]);
-               
-                var value = percentChance(4, random.Next(1, 2));
-                    API.setEntityData(col, itemTable[lootType][i, 1], value);
+                Random random = new Random();
+                int percent = Int32.Parse(itemTable[lootType][i, 4]);
+				
+				API.consoleOutput(percent.ToString());
+				
+                var value = percentChance(percent, random.Next(1, 2));
+                    API.setEntityData(col, itemTable[lootType][i, 0], value);
                 }
 
             refreshItemLoot(col, lootType);
@@ -112,7 +107,7 @@ namespace DayZ
 
             for (int i = 0; i < itemTable[lootType].GetLength(0); i++)
             {
-                    if (API.hasEntityData(col, itemTable[lootType][i, 1]))
+                    if (API.hasEntityData(col, itemTable[lootType][i, 0]))
                     {
                         if (count == 3)
                         {
@@ -120,9 +115,13 @@ namespace DayZ
                         }
                         count = count + 1;
                         Vector3 position = API.getEntityPosition(col);
+						Vector3 rotation = new Vector3(0, 0, 0);
+						if(itemTable[lootType][i,3] == "90"){
+							rotation = new Vector3(90,90,90);
+						}
                         int obj = Int32.Parse(itemTable[lootType][i, 1]);
                         float scale = Int32.Parse(itemTable[lootType][i, 2]); 
-                        objectItem[count] = API.createObject(obj, position, new Vector3(0, 0, 0));
+                        objectItem[count] = API.createObject(obj, position, rotation);
                         //API.setBlipScale(objectItem[count], scale);
                         API.setEntityCollisionless(objectItem[count], true);
                         API.setEntityPositionFrozen(objectItem[count], true);
