@@ -48,9 +48,10 @@ API.onUpdate.connect(function (sender, args) {
     {
         pool.ProcessMenus();
     }
-	showDebugMonitor(sender);
-	
-	API.setWeather(2);
+	showDebugMonitor();
+
+    
+	checkPlayerPing();
 	
 });
 
@@ -73,7 +74,9 @@ if (name == "createCamera") {
 		blood = args[7];
 		temperature = args[8];
 		items = args[9];
-	}
+	}else if(name == "updateAliveTime"){
+        setPlayerAliveTime();
+    }
 });
 
 API.onLocalPlayerDamaged.connect(function(enemy, weapon, bone) {
@@ -104,7 +107,7 @@ function openInventory()
         inventoryWindow.Visible = false;
 }
 
-function showDebugMonitor(sender){
+function showDebugMonitor(){
 	if(isLogged == true){
 
 		API.drawText("Debug Monitor: ", res_X - 150, 280, 0.2, 50, 205, 50, 255, 0, 1, false, false, 0);
@@ -142,6 +145,8 @@ function refreshDebugMonitor(){
         humanity = API.getEntitySyncedData(player, "humanity");
         banditsKilled = API.getEntitySyncedData(player, "banditsKilled");
 
+
+
         API.drawText("" + murders, res_X - 15, 340, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
         API.drawText("" + zombiesKilled, res_X - 15, 370, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
         API.drawText("" + aliveTime, res_X - 15, 400, 0.25, 255, 255, 255, 255, 0, 2, false, false, 0);
@@ -153,12 +158,13 @@ function refreshDebugMonitor(){
     }
 }
 
-var timer0 = setInterval(refreshDebugMonitor, 2000);
 
 
-function checkPlayerPing(sender){
 
-ping = API.getPlayerPing(sender);
+function checkPlayerPing(){
+
+var player = API.getLocalPlayer();
+ping = API.getPlayerPing(player);
 
     if(ping > 300){
         API.disconnect("Bad Ping");
@@ -168,20 +174,26 @@ ping = API.getPlayerPing(sender);
 function setPlayerAliveTime(){
     if(isLogged == true){
     var player = API.getLocalPlayer();
-        
+    var hour = "";     
+
     aliveTime = API.getEntitySyncedData(player, "aliveTime");
     aliveTime += 1;
+
+    if(aliveTime < 60)
     API.setEntitySyncedData(player, "aliveTime", aliveTime);
+    }else{
+        hour = aliveTime/60;
+
+    API.setEntitySyncedData(player, "aliveTime", hour + aliveTime);
     }
 }
-
-var timer = setInterval(setPlayerAliveTime, 1000 * 60);
 
 API.onKeyDown.connect(function (sender, e) {
   if (e.KeyCode === Keys.J) {
     openInventory();
   }
 });
+
 
 
 
