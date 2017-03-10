@@ -12,4 +12,6 @@
   <script src="spawn.cs" type="server" lang="csharp" />
   <script src="pickups.cs" type="server" lang="csharp" />
 <script src="editor.cs" type="server" lang="csharp" />
+
+<script src="inventory.js" type="client" lang="javascript" />
 </meta>

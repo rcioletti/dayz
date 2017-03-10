@@ -38,7 +38,6 @@ var damageTable = [ ["M4", 3500],
 var res_X = API.getScreenResolutionMantainRatio().Width;
 var res_y = API.getScreenResolutionMantainRatio().Height;
 
-var inventoryWindow = API.createMenu("Inventory", 0, 0, 4);
 var debugMonitor = API.createMenu("Debug Monitor:", 0, 0, 6);
 
 API.callNative("SET_FRONTEND_RADIO_ACTIVE", false);
@@ -87,25 +86,6 @@ API.onLocalPlayerDamaged.connect(function(enemy, weapon, bone) {
 		headshots += headshots;
     }
 });
-
-function openInventory()
-{
-    if (!inventoryWindow.Visible)
-    {
-        pool = API.getMenuPool();
-        inventoryWindow = API.createMenu(backpack + " (" + usedSlots + "/" + itemSlots + ")", -215, 0, 4);
-        pool.Add(inventoryWindow);
-        inventoryWindow.Visible = true;
-
-        for (var i = 0; i < usedSlots; i++)
-        {
-            var item = addInventoryItem(itemCounts[i] + ": " + items[i], items[i])
-            inventorywindow.AddItem(item);
-        }
-    }
-    else
-        inventoryWindow.Visible = false;
-}
 
 function showDebugMonitor(){
 	if(isLogged == true){
@@ -187,13 +167,4 @@ function setPlayerAliveTime(){
     API.setEntitySyncedData(player, "aliveTime", hour + aliveTime);
     }
 }
-
-API.onKeyDown.connect(function (sender, e) {
-  if (e.KeyCode === Keys.J) {
-    openInventory();
-  }
-});
-
-
-
 

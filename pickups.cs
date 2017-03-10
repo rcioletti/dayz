@@ -58,7 +58,7 @@ namespace DayZ
         public void createItemLoot(Vector3 lootPlace, int id, int lootType)
         {
             var handle = API.createSphereColShape(lootPlace, 5.0f);
-            var col = API.createTextLabel("ItemLoot", lootPlace, 5.0F, 1.0F);
+            var col = API.createTextLabel("ItemLoot press J to open iventory", lootPlace, 5.0F, 1.0F);
             
             API.setTextLabelColor(col, 189, 183, 107, 100);
             

@@ -31,9 +31,10 @@ namespace DayZ
           
 			API.setPlayerSkin(player, PedHash.Blackops01SMY);
             API.createVehicle(VehicleHash.Sanchez, new Vector3(-25.27f, -1554.27f, 30.69f), new Vector3(30,30,30), 1,1);
-            var mochila = API.createObject(1585260068, new Vector3(-25.27f, -1554.27f, 30.69f), new Vector3(0, 0, 0));
-            API.attachEntityToEntity(mochila, player, "10706", new Vector3(0,-0.20,-0.20), new Vector3(0,0,-180));
-           
+            //var mochila = API.createObject(1585260068, new Vector3(-25.27f, -1554.27f, 30.69f), new Vector3(0, 0, 0));
+            //API.attachEntityToEntity(mochila, player, "10706", new Vector3(0,-0.20,-0.20), new Vector3(0,0,-180));
+            API.setPlayerAccessory(player, 9 , 1 , 1);
+
         }
 
         public void OnClientEvent(Client player, string eventName, params object[] arguments)
@@ -133,6 +134,7 @@ namespace DayZ
             }
 
         }
+
     }
 }
 
